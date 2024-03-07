@@ -1,0 +1,20 @@
+Metrics/ClassLength:
+  Exclude:
+    - "api/routes/rescues.rb"
+    - "Gemfile"
+
+Metrics/MethodLength:
+  Exclude:
+    - "api/routes/rescues.rb"
+    - "Gemfile"
+
+Metrics/BlockLength:
+  Exclude:
+    - "api/routes/rescues.rb"
+    - "Gemfile"
+
+Metrics/LineLength:
+  Max: 150
+
+Style/Documentation:
+  Enabled: false
