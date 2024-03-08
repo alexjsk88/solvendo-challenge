@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require './api/models/hook'
+require './api/models/truck'
 
 module DAO
   # DAO Class to manage Templates
-  class HooksDAO
+  class TrucksDAO
     include Singleton
 
     def add(type, params)
@@ -14,7 +14,7 @@ module DAO
     private
 
     def model
-      Models::Hook
+      Models::Truck
     end
   end
 end

@@ -20,4 +20,5 @@ puts 'Running seeds'
 Rake::Task['db:seed'].invoke
 
 require File.expand_path('application', __dir__)
+API::Root.compile!
 run API::Root

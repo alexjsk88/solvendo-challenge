@@ -3,6 +3,7 @@
 require 'rake/testtask'
 require 'sequel'
 require './config/services'
+require './config/seeder'
 
 task default: :test
 
@@ -17,5 +18,10 @@ namespace :db do
   task :migrate do
     Sequel.extension :migration
     Sequel::Migrator.run(Services[:database], 'db/migrations')
+  end
+
+  desc 'Run database seeds'
+  task :seed, :environment do |_task, args|
+    Seeder.run_seeds!(args[:environment])
   end
 end
