@@ -5,7 +5,7 @@ Sequel.migration do
 
   up do
     create_table(:trips) do
-      Serial      :id, primary_key: true, unique: true
+      primary_key :id
       DateTime    :departure_date
       
       DateTime    :created_at, default: Sequel::CURRENT_TIMESTAMP

@@ -5,9 +5,9 @@ Sequel.migration do
 
   up do
     create_table(:states) do
-      Integer      :id, primary_key: true, unique: true
+      primary_key :id
       String      :state
-  end
+    end
 
     alter_table(:trips) do
       add_foreign_key :state_id, :states, default: 0

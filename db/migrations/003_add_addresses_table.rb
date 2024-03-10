@@ -5,7 +5,7 @@ Sequel.migration do
 
   up do
     create_table(:addresses) do
-      Serial      :id, primary_key: true, unique: true
+      primary_key :id
       String      :address
       String      :city
       String      :zip_code
