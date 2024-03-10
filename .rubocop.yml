@@ -13,7 +13,7 @@ Metrics/BlockLength:
     - "api/routes/rescues.rb"
     - "Gemfile"
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 150
 
 Style/Documentation:
