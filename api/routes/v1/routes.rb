@@ -6,7 +6,6 @@ require_relative '../rescues'
 require_relative 'endpoints/trucks'
 require_relative '../../business/trucks'
 require_relative '../../business/trips'
-require_relative '../../utils/utils'
 
 module Routes
   module V1

@@ -23,3 +23,5 @@ Thumbs.db
 application.log.0
 .directory
 .ruby-version
+/db/migrations/archivoC.txt
+.rubocop.yml

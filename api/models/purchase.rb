@@ -4,7 +4,7 @@ require 'sequel'
 require './config/services'
 
 module Models
-  # Hook sequel models
+  # Purchase sequel models
   class Purchase < Sequel::Model(Services[:database][:purchases])
     unrestrict_primary_key
   end

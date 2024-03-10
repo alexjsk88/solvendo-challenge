@@ -7,8 +7,8 @@ Sequel.migration do
     create_table(:purchases) do
       Serial      :id, primary_key: true, unique: true
       String      :customer_name
-      BigDecimal  :price, size: [10, 2]
-      BigDecimal  :weight, size: [10, 2]
+      BigDecimal  :price, size: [10, 2], default: 0
+      BigDecimal  :weight, size: [10, 2], default: 0
       DateTime    :delivery_date
       
       DateTime    :created_at, default: Sequel::CURRENT_TIMESTAMP
