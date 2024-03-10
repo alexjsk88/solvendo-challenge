@@ -3,6 +3,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org' do
+  gem 'activesupport',              '6.1.6'
   gem 'dotenv',                     '~> 2.7'
   gem 'dry-auto_inject',            '~> 0.4'
   gem 'dry-container',              '~> 0.6'
@@ -18,6 +19,8 @@ source 'https://rubygems.org' do
 
   group :development, :test do
     gem 'byebug',                   '~> 11.1.3'
+    gem 'ffaker',                   '~> 2.21.0'
+    gem 'irb',                      '~> 1.12'
     gem 'pry',                      '~> 0.14.1'
     gem 'rb-readline',              '~> 0.5.5'
   end
@@ -33,7 +36,6 @@ source 'https://rubygems.org' do
 
   group :test do
     gem 'colorize',                 '~> 0.8.1'
-    gem 'faker',                    '~> 2.19.0'
     gem 'minitest',                 '~> 5.14.4'
     gem 'minitest-reporters',       '~> 1.4.3'
     gem 'mocha',                    '~> 1.13.0'

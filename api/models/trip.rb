@@ -4,7 +4,7 @@ require 'sequel'
 require './config/services'
 
 module Models
-  # Hook sequel models
+  # Trip sequel models
   class Trip < Sequel::Model(Services[:database][:trips])
     unrestrict_primary_key
   end

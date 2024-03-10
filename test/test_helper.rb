@@ -14,7 +14,7 @@ require 'colorize'
 require 'minitest/reporters'
 require 'rack/test'
 require 'byebug'
-require 'faker'
+require 'ffaker'
 
 require './application'
 
