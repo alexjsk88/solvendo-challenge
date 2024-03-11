@@ -21,8 +21,8 @@ module Routes
 
       desc 'Test API working status'
       get :health, tags: ['health'] do
-        { 
-          status: :ok 
+        {
+          status: :ok
         }
       end
 
@@ -62,10 +62,24 @@ module Routes
           }
         end
 
+        desc 'Remove a truck from the fleet' do
+          detail 'Remove a truck from the fleet just if their trip is pending or delivered'
+          success Entities::Response.default_success
+          failure [{ code: 500, message: 'Invalid remove process for trucks' }]
+        end
+        params do
+          requires :plate_number, type: String, description: 'Truck plate number'
+        end
+        delete :remove, tags: ['trucks'] do
+          {
+            status: :success,
+            data: Business::Trucks.instance.remove(params[:plate_number])
+          }
+        end
 
         desc 'Schedule the truck for delivery trips using a date for scheduling as param' do
           success Entities::Response.default_success
-          failure [{ code: 500, message: 'Invalid scheduling process for trucks' }]          
+          failure [{ code: 500, message: 'Invalid scheduling process for trucks' }]
         end
         params do
           requires :date, allow_blank: false, type: DateTime, description: 'Scheduling date'
@@ -118,14 +132,14 @@ module Routes
           description: 'Documentation for Solvendo API'
         },
         models: [
-          ::Entities::Truck,
+          ::Entities::Truck
         ],
         tags: [
           { name: 'trucks', description: 'Endpoint for trucks operations' },
           { name: 'trips', description: 'Endpoint for trips operations' },
-          { name: 'health', description: 'API working status' }
+          { name: 'health', description: 'API for working status' }
         ]
       )
-    end    
+    end
   end
 end

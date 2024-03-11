@@ -12,6 +12,11 @@ module Business
     def add(params)
       DAO::TrucksDAO.instance.add(params)
     end
+
+    def remove(plate_number)
+      p plate_number
+      DAO::TrucksDAO.instance.remove(plate_number)
+    end
     def trucks
       p 'trucks'
     end
@@ -26,11 +31,11 @@ module Business
       # HttpClient.post(document.callback_url, { event_name: Constants::ExternalEvent::CONTRACT_SIGNED,
       #                                          source_id: document.source_id })
       # DAO::DocumentsDAO.instance.update(document_id, status: Constants::Documents::Status::SIGNED)
-      p "truck_info"
+      p 'truck_info'
     end
 
     def status(params)
-      p "status"
+      p 'status'
     end
 
     def schedule(scheduling_date)
