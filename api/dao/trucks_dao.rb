@@ -13,17 +13,29 @@ module DAO
       ds.insert
     end
 
-    def remove(plate_number)
-      p plate_number
-      truck_trip_state = db.fetch('SELECT states.state FROM trucks
-                                                       JOIN trips ON trucks.id = trips.truck_id
-                                                       JOIN states ON trips.state_id = states.id
-                                                       WHERE trucks.plate_number = ?', plate_number).all.first[:state]
-
-      throw RuntimeError, 'Truck is not available' if truck_trip_state == 'On Trip'
-
-      ds = db['DELETE FROM trucks WHERE plate_number = ?', plate_number]
+    def remove(truck_id)
+      ds = db['DELETE FROM trucks WHERE id = ?', truck_id]
       ds.delete
+    end
+
+    def search_by_truck_id(truck_id)
+      db.fetch('SELECT * FROM trucks WHERE id = ?', truck_id).all.first
+    end
+
+    def search_by_plate_number(plate_number)
+      db.fetch('SELECT * FROM trucks WHERE plate_number = ?', plate_number).all.first
+    end
+
+    def all
+      db.fetch('SELECT * FROM trucks').all
+    end
+
+    def available_list
+      db.fetch('SELECT * FROM trucks WHERE is_available = true').all
+    end
+
+    def average_max_weight_capacity
+      db.fetch('SELECT AVG(max_weight_capacity) FROM trucks').all.first
     end
 
     private

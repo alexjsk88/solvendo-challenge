@@ -39,7 +39,7 @@ module Routes
         get :available, tags: ['trucks'] do
           {
             status: :success,
-            data: Business::Trucks.instance.available_trucks
+            data: Business::Trucks.instance.available_list
           }
         end
 
@@ -52,10 +52,11 @@ module Routes
           with(allow_blank: false) do
             requires :plate_number, type: String, description: 'Truck plate number'
             requires :max_weight_capacity, type: BigDecimal, description: 'Truck maximum weight capacity for freight'
-            optional :work_days, type: String, values: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday], default: 'Monday', description: 'Working day for truck'
+            optional :work_days, type: String, values: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday], default: 'Monday',
+                                 description: 'Working day for truck'
           end
         end
-        post :add, tags: ['trucks'] do
+        post tags: ['trucks'] do
           {
             status: :success,
             data: Business::Trucks.instance.add(declared(params))
@@ -68,16 +69,18 @@ module Routes
           failure [{ code: 500, message: 'Invalid remove process for trucks' }]
         end
         params do
-          requires :plate_number, type: String, description: 'Truck plate number'
+          optional :truck_id, type: Integer, description: 'Truck ID'
+          optional :plate_number, type: String, description: 'Truck plate number'
+          exactly_one_of :truck_id, :plate_number
         end
-        delete :remove, tags: ['trucks'] do
+        delete tags: ['trucks'] do
           {
             status: :success,
-            data: Business::Trucks.instance.remove(params[:plate_number])
+            data: Business::Trucks.instance.remove(declared(params))
           }
         end
 
-        desc 'Schedule the truck for delivery trips using a date for scheduling as param' do
+        desc 'Schedule trucks for delivery trips using a date for scheduling as param' do
           success Entities::Response.default_success
           failure [{ code: 500, message: 'Invalid scheduling process for trucks' }]
         end
