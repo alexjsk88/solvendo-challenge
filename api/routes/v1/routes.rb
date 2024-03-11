@@ -21,8 +21,8 @@ module Routes
 
       desc 'Test API working status'
       get :health, tags: ['health'] do
-        { 
-          status: :ok 
+        {
+          status: :ok
         }
       end
 
@@ -39,13 +39,50 @@ module Routes
         get :available, tags: ['trucks'] do
           {
             status: :success,
-            data: Business::Trucks.instance.available_trucks
+            data: Business::Trucks.instance.available_list
           }
         end
 
-        desc 'Schedule the truck for delivery trips using a date for scheduling as param' do
+        desc 'Add a new truck to the fleet' do
+          detail 'Add a new truck to the fleet. The truck is_available property is true by default'
           success Entities::Response.default_success
-          failure [{ code: 500, message: 'Invalid scheduling process for trucks' }]          
+          failure [{ code: 500, message: 'Invalid adding process for trucks' }]
+        end
+        params do
+          with(allow_blank: false) do
+            requires :plate_number, type: String, description: 'Truck plate number'
+            requires :max_weight_capacity, type: BigDecimal, description: 'Truck maximum weight capacity for freight'
+            optional :work_days, type: String, values: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday], default: 'Monday',
+                                 description: 'Working day for truck'
+          end
+        end
+        post tags: ['trucks'] do
+          {
+            status: :success,
+            data: Business::Trucks.instance.add(declared(params))
+          }
+        end
+
+        desc 'Remove a truck from the fleet' do
+          detail 'Remove a truck from the fleet just if their trip is pending or delivered'
+          success Entities::Response.default_success
+          failure [{ code: 500, message: 'Invalid remove process for trucks' }]
+        end
+        params do
+          optional :truck_id, type: Integer, description: 'Truck ID'
+          optional :plate_number, type: String, description: 'Truck plate number'
+          exactly_one_of :truck_id, :plate_number
+        end
+        delete tags: ['trucks'] do
+          {
+            status: :success,
+            data: Business::Trucks.instance.remove(declared(params))
+          }
+        end
+
+        desc 'Schedule trucks for delivery trips using a date for scheduling as param' do
+          success Entities::Response.default_success
+          failure [{ code: 500, message: 'Invalid scheduling process for trucks' }]
         end
         params do
           requires :date, allow_blank: false, type: DateTime, description: 'Scheduling date'
@@ -98,14 +135,14 @@ module Routes
           description: 'Documentation for Solvendo API'
         },
         models: [
-          ::Entities::Truck,
+          ::Entities::Truck
         ],
         tags: [
           { name: 'trucks', description: 'Endpoint for trucks operations' },
           { name: 'trips', description: 'Endpoint for trips operations' },
-          { name: 'health', description: 'API working status' }
+          { name: 'health', description: 'API for working status' }
         ]
       )
-    end    
+    end
   end
 end

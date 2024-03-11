@@ -7,14 +7,23 @@ module DAO
   class TripsDAO
     include Singleton
 
-    def add(type, params)
-      model.insert(type: type, data: params.to_json)
+    def add(type, params); end
+
+    def all
+      db.fetch('SELECT * FROM trips').all
+    end
+
+    def search_truck_on_trips(truck_id)
+      db.fetch('SELECT states.state FROM trucks
+                                    JOIN trips ON trucks.id = trips.truck_id
+                                    JOIN states ON trips.state_id = states.id
+                                    WHERE trucks.id = ?', truck_id).all.first
     end
 
     private
 
-    def model
-      Models::Trip
+    def db
+      Services[:database]
     end
   end
 end

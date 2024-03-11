@@ -5,8 +5,8 @@ Sequel.migration do
 
   up do
     create_table(:trucks) do
-      Serial      :id, primary_key: true, unique: true
-      String      :plate_number
+      primary_key :id
+      String      :plate_number, unique: true, index: true
       BigDecimal  :max_weight_capacity, size: [10, 2]
       String      :work_days, default: 'Monday'
       TrueClass   :is_available, default: true

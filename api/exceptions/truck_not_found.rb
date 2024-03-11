@@ -3,10 +3,10 @@
 require_relative 'core_exception'
 
 module Exceptions
-  # Class to manage AlreadyRegisteredDocument
-  class AlreadyRegisteredDocument < CoreException
+  # Class to manage TruckNotFound
+  class TruckNotFound < CoreException
     def code
-      'ALREADY_REGISTERED_DOCUMENT'
+      'TRUCK_NOT_FOUND'
     end
 
     def status_code

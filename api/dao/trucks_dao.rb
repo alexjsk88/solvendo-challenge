@@ -7,14 +7,41 @@ module DAO
   class TrucksDAO
     include Singleton
 
-    def add(type, params)
-      model.insert(type: type, data: params.to_json)
+    def add(params)
+      ds = db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days) VALUES(?, ?, ?)', params[:plate_number], 
+                                                                                                  params[:max_weight_capacity], params[:work_days]]
+      ds.insert
+    end
+
+    def remove(truck_id)
+      ds = db['DELETE FROM trucks WHERE id = ?', truck_id]
+      ds.delete
+    end
+
+    def search_by_truck_id(truck_id)
+      db.fetch('SELECT * FROM trucks WHERE id = ?', truck_id).all.first
+    end
+
+    def search_by_plate_number(plate_number)
+      db.fetch('SELECT * FROM trucks WHERE plate_number = ?', plate_number).all.first
+    end
+
+    def all
+      db.fetch('SELECT * FROM trucks').all
+    end
+
+    def available_list
+      db.fetch('SELECT * FROM trucks WHERE is_available = true').all
+    end
+
+    def average_max_weight_capacity
+      db.fetch('SELECT AVG(max_weight_capacity) FROM trucks').all.first
     end
 
     private
 
-    def model
-      Models::Truck
+    def db
+      Services[:database]
     end
   end
 end
