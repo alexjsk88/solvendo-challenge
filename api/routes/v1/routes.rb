@@ -43,6 +43,26 @@ module Routes
           }
         end
 
+        desc 'Add a new truck to the fleet' do
+          detail 'Add a new truck to the fleet. The truck is_available property is true by default'
+          success Entities::Response.default_success
+          failure [{ code: 500, message: 'Invalid adding process for trucks' }]
+        end
+        params do
+          with(allow_blank: false) do
+            requires :plate_number, type: String, description: 'Truck plate number'
+            requires :max_weight_capacity, type: BigDecimal, description: 'Truck maximum weight capacity for freight'
+            optional :work_days, type: String, values: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday], default: 'Monday', description: 'Working day for truck'
+          end
+        end
+        post :add, tags: ['trucks'] do
+          {
+            status: :success,
+            data: Business::Trucks.instance.add(declared(params))
+          }
+        end
+
+
         desc 'Schedule the truck for delivery trips using a date for scheduling as param' do
           success Entities::Response.default_success
           failure [{ code: 500, message: 'Invalid scheduling process for trucks' }]          

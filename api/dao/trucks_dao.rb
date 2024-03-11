@@ -7,8 +7,11 @@ module DAO
   class TrucksDAO
     include Singleton
 
-    def add(type, params)
-      model.insert(type: type, data: params.to_json)
+    def add(params)
+      ds = db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days) VALUES(?, ?, ?)', params[:plate_number], 
+                                                                                                  params[:max_weight_capacity], params[:work_days]]
+      ds.insert
+    end
     end
 
     private

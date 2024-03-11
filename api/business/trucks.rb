@@ -9,6 +9,9 @@ module Business
   class Trucks
     include Singleton
 
+    def add(params)
+      DAO::TrucksDAO.instance.add(params)
+    end
     def trucks
       p 'trucks'
     end
