@@ -23,14 +23,19 @@ module Business
         schedule_truck_for_date(scheduling_date, truck, purchases_by_zip_code)
       end
 
-      response
+      formatted_response
     end
 
     private
 
-    def response
-      # p response
-      # dataset = DAO::PurchasesDAO.instance.just_with_trips
+    def formatted_response
+      dataset = DAO::PurchasesDAO.instance.just_with_trips
+      trip_id_hash = dataset.sort_by! { |trip| trip[:trip_id] }.group_by { |trip| trip[:trip_id] }
+
+      trip_id_hash.map do |trip_id, trips|
+        zip_codes = trips.map { |trip| trip[:zip_code] }.join(' ')
+        "trip #{trip_id} -> zip code: #{zip_codes}"
+      end
     end
 
     def schedule_truck_for_date(scheduling_date, truck, purchases_by_zip_code)
