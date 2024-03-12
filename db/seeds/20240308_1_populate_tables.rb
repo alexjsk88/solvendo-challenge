@@ -17,7 +17,7 @@ Sequel.seed(:development, :test) do
     # Purchases table seed
     # TODO: Update "price" and "weight" automatically with the sum of all the items "price" and "weight"
     5.times do
-      purchase_id = db['INSERT INTO purchases(customer_name, created_at) VALUES(?, ?)',
+      db['INSERT INTO purchases(customer_name, created_at) VALUES(?, ?)',
                        FFaker::Name.name,
                        Date.today.prev_day.to_datetime].insert
     end
