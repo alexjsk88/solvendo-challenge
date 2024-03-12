@@ -18,9 +18,9 @@ Sequel.seed(:development, :test) do
 
     # Seed para la tabla de purchases
     10.times do
-      insert_ds = db['INSERT INTO purchases(customer_name, delivery_date) VALUES(?, ?)',
+      insert_ds = db['INSERT INTO purchases(customer_name, created_at) VALUES(?, ?, ?)',
                      FFaker::Name.name,
-                     '2024-03-09']
+                     Date.today.prev_day.to_datetime]
 
       insert_ds.insert
     end
@@ -46,4 +46,3 @@ Sequel.seed(:development, :test) do
     end
   end
 end
-
