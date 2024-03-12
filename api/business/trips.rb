@@ -32,20 +32,24 @@ module Business
       dataset = DAO::PurchasesDAO.instance.just_with_trips
       trip_id_hash = dataset.sort_by! { |trip| trip[:trip_id] }.group_by { |trip| trip[:trip_id] }
 
-      trip_output = trip_id_hash.map do |trip_id, trips|
+      {
+        trips: trip_output(trip_id_hash),
+        truck: truck_output(trip_id_hash)
+      }
+    end
+
+    def trip_output(trip_id_hash)
+      trip_id_hash.map do |trip_id, trips|
         zip_codes = trips.map { |trip| trip[:zip_code] }.join(' ')
         "trip #{trip_id} -> zip code: #{zip_codes}"
       end
+    end
 
-      truck_output = trip_id_hash.map do |trip_id, trips|
+    def truck_output(trip_id_hash)
+      trip_id_hash.map do |trip_id, trips|
         plate_number = trips.first[:plate_number]
         "trip #{trip_id} -> Truck plate: #{plate_number}"
       end
-
-      {
-        trips: trip_output,
-        truck: truck_output
-      }
     end
 
     def schedule_truck_for_date(scheduling_date, truck, purchases_by_zip_code)
