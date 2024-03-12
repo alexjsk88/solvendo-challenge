@@ -47,10 +47,6 @@ module Business
       }
     end
 
-    def schedule(_scheduling_date)
-      p 'truck schedule'
-    end
-
     private
 
     def find_truck_id(params)
