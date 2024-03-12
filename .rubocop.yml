@@ -18,3 +18,9 @@ Layout/LineLength:
 
 Style/Documentation:
   Enabled: false
+
+Layout/EmptyLines:
+  Enabled: false
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false

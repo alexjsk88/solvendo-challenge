@@ -1,24 +1,17 @@
 # frozen_string_literal: true
 
-require './api/models/trip'
-
 module DAO
-  # DAO Class to manage Trips
-  class TripsDAO
+  # DAO Class to manage Templates
+  class PurchasesDAO
     include Singleton
 
-    def add(params)
-      ds = db['INSERT INTO trips(departure_date, truck_id, state_id) VALUES (?, ?, ?)',
-                     params[:departure_date],
-                     params[:truck_id],
-                     1]
-      trip_id = ds.insert
+    def add(type, params); end
 
-      ::PurchasesDAO.instance.set_trip_id(trip_id)
-    end
-    
-    def all
-      db.fetch('SELECT * FROM trips').all
+    def all_without_trips
+      db.fetch('SELECT * FROM purchases
+                         JOIN addresses_purchases ON purchases.id = addresses_purchases.purchase_id
+                         JOIN addresses ON addresses_purchases.address_id = addresses.id
+                         WHERE purchases.trip_id IS NULL').all
     end
 
     def search_truck_on_trips(truck_id)

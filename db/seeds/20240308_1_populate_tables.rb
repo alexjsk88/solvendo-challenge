@@ -17,8 +17,10 @@ Sequel.seed(:development, :test) do
     end
 
     # Seed para la tabla de purchases
+    # TODO: Update "price" and "weight" automatically with the sum of all the items "price" and "weight"
+
     10.times do
-      insert_ds = db['INSERT INTO purchases(customer_name, created_at) VALUES(?, ?, ?)',
+      insert_ds = db['INSERT INTO purchases(customer_name, created_at) VALUES(?, ?)',
                      FFaker::Name.name,
                      Date.today.prev_day.to_datetime]
 
