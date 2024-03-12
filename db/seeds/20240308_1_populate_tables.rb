@@ -7,44 +7,35 @@ Sequel.seed(:development, :test) do
     db = Services[:database]
 
     # Items table seed
-    20.times do
-      insert_ds = db['INSERT INTO items(name, price, weight) VALUES(?, ?, ?)',
-                     FFaker::Product.product_name,
-                     FFaker::Number.decimal,
-                     FFaker::Number.decimal]
-
-      insert_ds.insert
+    10.times do
+      db['INSERT INTO items(name, price, weight) VALUES(?, ?, ?)',
+         FFaker::Product.product_name,
+         FFaker::Number.decimal,
+         FFaker::Number.decimal].insert
     end
 
-    # Seed para la tabla de purchases
+    # Purchases table seed
     # TODO: Update "price" and "weight" automatically with the sum of all the items "price" and "weight"
-
-    10.times do
-      insert_ds = db['INSERT INTO purchases(customer_name, created_at) VALUES(?, ?)',
-                     FFaker::Name.name,
-                     Date.today.prev_day.to_datetime]
-
-      insert_ds.insert
+    5.times do
+      purchase_id = db['INSERT INTO purchases(customer_name, created_at) VALUES(?, ?)',
+                       FFaker::Name.name,
+                       Date.today.prev_day.to_datetime].insert
     end
 
-    # Seed para la tabla de addresses
+    # Addresses table seed
     10.times do
-      insert_ds = db['INSERT INTO addresses(address, city, zip_code) VALUES(?, ?, ?)',
-                     FFaker::Address.street_address,
-                     FFaker::Address.city,
-                     FFaker::AddressUS.zip_code]
-
-      insert_ds.insert
+      db['INSERT INTO addresses(address, city, zip_code) VALUES(?, ?, ?)',
+         FFaker::Address.street_address,
+         FFaker::Address.city,
+         FFaker::AddressUS.zip_code].insert
     end
 
-    # Seed para la tabla de trucks
+    # Trucks table seed
     10.times do
-      insert_ds = db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days) VALUES(?, ?, ?)',
-                     FFaker::Vehicle.vin,
-                     FFaker::Number.decimal,
-                     %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday].sample]
-
-      insert_ds.insert
+      db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days) VALUES(?, ?, ?)',
+         FFaker::Vehicle.vin,
+         FFaker::Number.decimal,
+         %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday].sample].insert
     end
   end
 end
