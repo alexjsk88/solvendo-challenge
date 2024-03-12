@@ -2,7 +2,6 @@
 
 require 'rake'
 require 'rack/cors'
-require './config/service_config'
 
 use Rack::Cors do
   allow do
