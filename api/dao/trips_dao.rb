@@ -7,15 +7,15 @@ module DAO
   class TripsDAO
     include Singleton
 
-    def add(purchases_id_list, params)
-      db.transaction do
-        trip_id = db['INSERT INTO trips(departure_date, truck_id, state_id) VALUES (?, ?, ?)',
-                     params[:departure_date],
-                     params[:truck_id],
-                     1].insert
-        
-        purchases_id_list.each { |purchase_id| PurchasesDAO.instance.update_trip_id(purchase_id, trip_id) }
-      end
+    def add(params)
+      date_accumulator = DateTime.now
+      db['INSERT INTO trips(departure_date, state_id, created_at, updated_at) VALUES (?, ?, ?, ?)',
+         params[:departure_date],
+         0,
+         date_accumulator += 0.00005,
+         date_accumulator += 0.00005].insert
+
+      last_modified_row_id
     end
 
     def all
@@ -33,6 +33,10 @@ module DAO
 
     def db
       Services[:database]
+    end
+
+    def last_modified_row_id
+      db.fetch('SELECT id FROM trips ORDER BY updated_at DESC LIMIT 1').all.first
     end
   end
 end

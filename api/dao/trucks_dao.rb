@@ -10,15 +10,16 @@ module DAO
     include Singleton
 
     def add(params)
-      ds = db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days) VALUES(?, ?, ?)',
+      db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days, created_at, updated_at) VALUES(?, ?, ?, ?, ?)',
               params[:plate_number],
-              params[:max_weight_capacity], params[:work_days]]
-      ds.insert
+              params[:max_weight_capacity], 
+              params[:work_days],
+              Sequel::CURRENT_TIMESTAMP,
+              Sequel::CURRENT_TIMESTAMP].insert
     end
 
     def remove(truck_id)
-      ds = db['DELETE FROM trucks WHERE id = ?', truck_id]
-      ds.delete
+      db['DELETE FROM trucks WHERE id = ?', truck_id].delete
     end
 
     def search_by_truck_id(truck_id)
