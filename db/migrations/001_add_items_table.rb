@@ -11,6 +11,7 @@ Sequel.migration do
       BigDecimal  :weight, size: [10, 2]
       
       DateTime  :created_at, default: Sequel::CURRENT_TIMESTAMP
+      DateTime  :updated_at, default: Sequel::CURRENT_TIMESTAMP
     end
   end
 end

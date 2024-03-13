@@ -18,13 +18,13 @@ Sequel.seed(:development, :test) do
 
     purchases_list.each do |purchase|
       item_id = items_list.shuffle!.pop[:id]
-      db['UPDATE items SET purchase_id = ? WHERE id = ?', purchase[:id], item_id].update
+      db['UPDATE items SET purchase_id = ?, updated_at = ? WHERE id = ?', purchase[:id], Sequel::CURRENT_TIMESTAMP, item_id].update
 
       price = db.fetch('SELECT SUM(price) AS total FROM items WHERE purchase_id = ? GROUP BY purchase_id', purchase[:id])
-      db['UPDATE purchases SET price = ? WHERE id = ?', price.first[:total], purchase[:id]].update
+      db['UPDATE purchases SET price = ?, updated_at = ? WHERE id = ?', price.first[:total], Sequel::CURRENT_TIMESTAMP, purchase[:id]].update
 
       weight = db.fetch('SELECT SUM(weight) AS total FROM items WHERE purchase_id = ? GROUP BY purchase_id', purchase[:id])
-      db['UPDATE purchases SET weight = ? WHERE id = ?', weight.first[:total], purchase[:id]].update
+      db['UPDATE purchases SET weight = ?, updated_at = ? WHERE id = ?', weight.first[:total], Sequel::CURRENT_TIMESTAMP, purchase[:id]].update
     end
   end
 end

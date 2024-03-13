@@ -12,6 +12,7 @@ Sequel.migration do
       TrueClass   :is_available, default: true
       
       DateTime    :created_at, default: Sequel::CURRENT_TIMESTAMP
+      DateTime    :updated_at, default: Sequel::CURRENT_TIMESTAMP
     end
   end
 end
