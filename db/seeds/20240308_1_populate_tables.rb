@@ -7,7 +7,7 @@ Sequel.seed(:development, :test) do
     db = Services[:database]
 
     # Items table seed
-    5.times do
+    10.times do
       db['INSERT INTO items(name, price, weight, created_at, updated_at) VALUES(?, ?, ?, ?, ?)',
          FFaker::Product.product_name,
          FFaker::Number.decimal,
@@ -17,8 +17,7 @@ Sequel.seed(:development, :test) do
     end
 
     # Purchases table seed
-    # TODO: Update "price" and "weight" automatically with the sum of all the items "price" and "weight"
-    2.times do
+    8.times do
       db['INSERT INTO purchases(customer_name, created_at, updated_at) VALUES(?, ?, ?)',
          FFaker::Name.name,
          Date.today.prev_day.to_datetime,
@@ -26,7 +25,7 @@ Sequel.seed(:development, :test) do
     end
 
     # Addresses table seed
-    2.times do
+    6.times do
       db['INSERT INTO addresses(address, city, zip_code) VALUES(?, ?, ?)',
          FFaker::Address.street_address,
          FFaker::Address.city,
@@ -34,7 +33,7 @@ Sequel.seed(:development, :test) do
     end
 
     # Trucks table seed
-    3.times do
+    5.times do
       db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days, created_at, updated_at) VALUES(?, ?, ?, ?, ?)',
          FFaker::Vehicle.vin,
          FFaker::Number.decimal,
