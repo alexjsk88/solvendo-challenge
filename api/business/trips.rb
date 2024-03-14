@@ -58,7 +58,8 @@ module Business
     end
 
     # This method returns a hash with all purchases that have no trip assigned, from yesterday, ordered by "weight"
-    # from the lowest to the highest and grouped by zip code.
+    # from the lowest to the highest and grouped by zip code. The hash keys are the zip code and the values are the
+    # list of purchases.
     def analyze_purchases
       yesterday = Date.today.prev_day.to_date
       purchases_from_yesterday = DAO::PurchasesDAO.instance.all_without_trips
@@ -69,9 +70,6 @@ module Business
 
       purchases_from_yesterday.group_by { |hash| hash[:zip_code] }
     end
-
-    # This method returns a hash with a list of available trucks grouped by the day of the week
-    # and previously ordered by "max_weight_capacity' from the highest to the lowest.
 
     def day_name(date)
       date.strftime('%A').capitalize
