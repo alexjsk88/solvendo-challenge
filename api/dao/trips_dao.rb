@@ -49,8 +49,8 @@ module DAO
                                     WHERE trucks.id = ?', truck_id).all.first
     end
 
-    def update_truck_id_by_trip_id(truck_id, trip_id)
-      db['UPDATE trips SET truck_id = ? WHERE id = ?', truck_id, trip_id].update
+    def assing_truck_to_trip(truck_id, trip_id)
+      db['UPDATE trips SET truck_id = ?, state_id = 1 WHERE id = ?', truck_id, trip_id].update
     end
 
     private

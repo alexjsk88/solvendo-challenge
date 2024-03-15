@@ -78,7 +78,7 @@ module Business
 
         truck_id = trucks.first[:id]
         db.transaction do
-          DAO::TripsDAO.instance.update_truck_id_by_trip_id(trucks.shift[:id], trips.shift[:trip_id])
+          DAO::TripsDAO.instance.assing_truck_to_trip(trucks.shift[:id], trips.shift[:trip_id])
           DAO::TrucksDAO.instance.update_available_status(truck_id, false)
         end
       end
