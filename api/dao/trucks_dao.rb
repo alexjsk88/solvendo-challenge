@@ -2,8 +2,6 @@
 
 require './api/models/truck'
 
-# TODO: ds.update, ds.insert, ds.delete have to be refactored
-
 module DAO
   # DAO Class to manage Templates
   class TrucksDAO
