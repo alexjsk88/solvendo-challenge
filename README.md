@@ -14,6 +14,7 @@ Follow these steps to get the project up and running:
 
 ```bash
 docker pull alexjsk88/tech-support-analyst-challenge:v0.1
+```
 
 - Once the Docker image is pulled, you can start the application. Open a web browser and navigate by the URLs according to API endpoints.
 
