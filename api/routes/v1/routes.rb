@@ -80,6 +80,20 @@ module Routes
           }
         end
 
+        desc 'Schedule trucks for delivery trips using a date for scheduling as param' do
+          success Entities::Response.default_success
+          failure [{ code: 500, message: 'Invalid scheduling process for trucks' }]
+        end
+        params do
+          requires :date, allow_blank: false, type: DateTime, description: 'Scheduling date'
+        end
+        get :schedule, tags: ['trucks'] do
+          {
+            status: :success,
+            data: Business::Trucks.instance.schedule(params[:date])
+          }
+        end
+
         route_param :truck_id do
           mount Endpoints::Trucks
         end

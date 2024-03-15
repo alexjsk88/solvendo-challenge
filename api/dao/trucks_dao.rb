@@ -2,7 +2,7 @@
 
 require './api/models/truck'
 
-# TODO ds.update, ds.insert, ds.delete have to be refactored
+# TODO: ds.update, ds.insert, ds.delete have to be refactored
 
 module DAO
   # DAO Class to manage Templates
@@ -11,11 +11,11 @@ module DAO
 
     def add(params)
       db['INSERT INTO trucks(plate_number, max_weight_capacity, work_days, created_at, updated_at) VALUES(?, ?, ?, ?, ?)',
-              params[:plate_number],
-              params[:max_weight_capacity], 
-              params[:work_days],
-              Sequel::CURRENT_TIMESTAMP,
-              Sequel::CURRENT_TIMESTAMP].insert
+         params[:plate_number],
+         params[:max_weight_capacity],
+         params[:work_days],
+         Sequel::CURRENT_TIMESTAMP,
+         Sequel::CURRENT_TIMESTAMP].insert
     end
 
     def remove(truck_id)
